@@ -3,9 +3,11 @@ package personnages;
 public class Romain {
 	private String nom;
 	private int force;
+	private Equipement[] equipements = new Equipement[2];
+	private int nbEquipement = 0;
 
 	public Romain(String nom, int force) {
-		assert(force>0);
+		assert (force > 0);
 		this.nom = nom;
 		this.force = force;
 	}
@@ -23,7 +25,7 @@ public class Romain {
 	}
 
 	public void recevoirCoup(int forceCoup) {
-		assert force>0 : "la force d’un Romain est positive";
+		assert force > 0 : "la force d’un Romain est positive";
 		int forceDebut = force;
 		force -= forceCoup;
 		if (force > 0) {
@@ -31,12 +33,31 @@ public class Romain {
 		} else {
 			parler("J'abandonne...");
 		}
-		assert forceDebut>force : "la force d’un Romain a diminué" ;
+		assert forceDebut > force : "la force d’un Romain a diminué";
+	}
+
+	public void sEquiper(Equipement equipement) {
+		switch (nbEquipement) {
+		case 2:
+			System.out.println("Le soldat " + nom + " est déjà bien protégé !");
+			break;
+		default:
+			if (equipement == equipements[0]) {
+				System.out.println("Le soldat "+nom+" possède déjà un " + equipement.getNom() + ".");
+			} else {
+				equipements[nbEquipement] = equipement;
+				nbEquipement++;
+				System.out.println("Le soldat Minus s’équipe avec un " + equipement.getNom() + ".");
+			}
+		}
 	}
 
 	public static void main(String[] args) {
 		Romain minus = new Romain("Minus", 6);
-
+		minus.sEquiper(Equipement.CASQUE);
+		minus.sEquiper(Equipement.CASQUE);
+		minus.sEquiper(Equipement.BOUCLIER);
+		minus.sEquiper(Equipement.CASQUE);
 
 	}
 }
